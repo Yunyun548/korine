@@ -70,7 +70,7 @@ vich_uploader:
     mappings:
         image_file:
             uri_prefix:         /images
-            upload_destination: '%kernel.root_dir%/../web/images/'
+            upload_destination: '%kernel.root_dir%/../web/uploads/images'
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -88,9 +88,30 @@ fos_user:
 easy_admin:
     design:
         menu: ['User', 'Image']
+        form_theme: ['horizontal', 'VichUploaderBundle:Form:fields.html.twig']
     # ...
     entities:
         User:
             class: AppBundle\Entity\User
+            form:
+                fields:
+                    - username
+                    - email
+                    - enabled
+                    - lastLogin
+                    - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
         Image:
             class: AppBundle\Entity\Image
+            list:
+                fields:
+                    - id
+                    - title
+                    - description
+                    - { property: 'imageName', type: 'image', base_path: '/uploads/images' }
+                actions: [-show]
+            form:
+                fields:
+                    - title
+                    - description
+                    - { property: 'imageFile', type: 'file' }
