@@ -1,13 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
 {% endblock %}
 
 {% block body %}
-
+    <div class="korine-horizontal-gallery">
+        {% for image in images %}
+            <img class="img-responsive korine-gallery-image"
+                 data-src="{{ asset('uploads/images/' ~ image.imageName) }}"
+                 alt="{{ image.title }}"
+            />
+        {% endfor %}
+    </div>
+    <div class="korine-flex-center">
+        <img class="korine-logo" src="{{ asset('img/KORINE_BLANC.svg') }}" alt="logo korine" />
+    </div>
+    <div class="korine-footer">
+        <a href="#">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        <a href="#">
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        <a href="#">
+            <i class="fa fa-instagram" aria-hidden="true"></i>
+        </a>
+        <a href="#">contact@korine.fr</a>
+    </div>
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('js/index.js') }}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="{{ asset('js/portfolio.pack.min.js') }}"></script>
+    <script type="text/javascript">
+        $( document ).ready(function() {
+
+            var p = $(".korine-horizontal-gallery").portfolio({
+                showArrows: false,
+            });
+            p.init();
+
+            // $(".korine-horizontal-gallery").show(
+                // "slide", { direction: "left" }
+            // , 400);
+            $(".korine-horizontal-gallery").animate({
+                left: 0,
+            }, 1500, function() {
+                // Animation complete.
+            });
+        });
+    </script>
 {% endblock %}

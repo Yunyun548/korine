@@ -1,3 +1,47 @@
 body {
-    background-color: black;
+    background-color: #221f20;
+    overflow-x: hidden;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* LOGO */
+.korine-logo {
+    height: 25%;
+    width: 92%;
+}
+
+.korine-flex-center {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+}
+
+/* GALLERY */
+.korine-horizontal-gallery {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 3000px;
+    height: 25%;
+    overflow-x: hidden !important;
+}
+
+.korine-gallery-image {
+    height: 100% !important;
+}
+
+/* FOOTER */
+.korine-footer {
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+.korine-footer a {
+    padding-left: 5px;
+    padding-right: 5px;
 }
