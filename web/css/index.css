@@ -13,6 +13,7 @@ a {
     height: 25%;
     max-width: 50%;
     min-width: 50%;
+    display: none;
 }
 
 .korine-flex-center {
@@ -26,6 +27,8 @@ a {
 .korine-horizontal-gallery {
     display: flex;
     align-self: flex-start; /* align top left */
+    top: 0;
+    position: absolute;
     left: 3000px;
     overflow-x: hidden !important;
 }
