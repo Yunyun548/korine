@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Image
+ * Theme
  *
  * @Vich\Uploadable
- * @ORM\Table(name="image")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ORM\Table(name="theme")
+ * @ORM\Entity
  */
-class Image
+class Theme
 {
     /**
      * @var int
@@ -27,21 +27,14 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $description;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
-     */
-    private $title;
+    private $name;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="image_file", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="theme_file", fileNameProperty="imageName")
      *
      * @var File
      */
@@ -62,14 +55,10 @@ class Image
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="images")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="theme", cascade={"remove"})
+     * @ORM\OrderBy({"id" = "DESC"})
      */
-    protected $theme;
-
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
+    protected $images;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -80,7 +69,7 @@ class Image
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      *
-     * @return Image
+     * @return Theme
      */
     public function setImageFile(File $image = null)
     {
@@ -96,6 +85,14 @@ class Image
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * @return File|null
      */
     public function getImageFile()
@@ -106,7 +103,7 @@ class Image
     /**
      * @param string $imageName
      *
-     * @return Image
+     * @return Theme
      */
     public function setImageName($imageName)
     {
@@ -134,75 +131,56 @@ class Image
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
+     * @param string $name
      *
      * @return Image
      */
-    public function setDescription($description)
+    public function setName($name)
     {
-        $this->description = $description;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get description
-     *
-     * @return string
+     * @return string|null
      */
-    public function getDescription()
+    public function getName()
     {
-        return $this->description;
+        return $this->name;
     }
 
     /**
-     * Set title
+     * Add image
      *
-     * @param string $title
+     * @param \CoreBundle\Entity\Image $image
      *
-     * @return Image
+     * @return Company
      */
-    public function setTitle($title)
+    public function addImage(\CoreBundle\Entity\Image $image)
     {
-        $this->title = $title;
+        $this->images[] = $image;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Remove image
      *
-     * @return string
+     * @param \CoreBundle\Entity\Image $image
      */
-    public function getTitle()
+    public function removeImage(\CoreBundle\Entity\Image $image)
     {
-        return $this->title;
+        $this->images->removeElement($image);
     }
 
     /**
-     * Set theme
+     * Get images
      *
-     * @param \AppBundle\Entity\Theme $theme
-     *
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setTheme(\CoreBundle\Entity\Theme $theme = null)
+    public function getImages()
     {
-        $this->theme = $theme;
-
-        return $this;
+        return $this->images;
     }
-
-    /**
-     * Get theme
-     *
-     * @return \AppBundle\Entity\Theme
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
 }

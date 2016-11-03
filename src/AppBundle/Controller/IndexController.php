@@ -16,10 +16,10 @@ class IndexController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $images = $em->getRepository('AppBundle:Image')->findAll();
+        $themes = $em->getRepository('AppBundle:Theme')->findAll();
 
         return $this->render('default/index.html.twig', [
-            'images' => $images,
+            'images' => $themes,
         ]);
     }
 }

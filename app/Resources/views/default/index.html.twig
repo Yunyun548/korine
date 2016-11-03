@@ -11,7 +11,7 @@
         {% for image in images %}
             <img class="img-responsive korine-gallery-image"
                  data-src="{{ asset('uploads/images/' ~ image.imageName) }}"
-                 alt="{{ image.title }}"
+                 alt="{{ image.name }}"
             />
         {% endfor %}
     </div>
