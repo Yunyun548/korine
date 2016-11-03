@@ -35,6 +35,7 @@
 {% block js %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script src="{{ asset('js/portfolio.pack.min.js') }}"></script>
+    <!-- <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script> -->
     <script type="text/javascript">
         $( document ).ready(function() {
 
@@ -43,11 +44,17 @@
             });
             p.init();
 
-            $(".korine-horizontal-gallery").animate({
-                left: 0,
-            }, 1500, function() {
-                // Animation complete.
+            $('.korine-logo').slideToggle(800, 'linear', function() {
+                var marginTop = $(".korine-flex-center").css( "margin-top" );
+                $('.korine-logo').animate({ 'marginTop': marginTop }, 1000, function() {
+                    $(".korine-horizontal-gallery").animate({
+                        left: 0,
+                    }, 3000, function() {
+                        // Animation complete.
+                    });
+                });
             });
+
 
             // TODO : Full page lightbox
         });
