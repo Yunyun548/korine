@@ -19,7 +19,7 @@ class IndexController extends Controller
         $themes = $em->getRepository('AppBundle:Theme')->findAll();
 
         return $this->render('default/index.html.twig', [
-            'images' => $themes,
+            'themes' => $themes,
         ]);
     }
 }

@@ -188,7 +188,7 @@ class Image
      *
      * @return User
      */
-    public function setTheme(\CoreBundle\Entity\Theme $theme = null)
+    public function setTheme(\AppBundle\Entity\Theme $theme = null)
     {
         $this->theme = $theme;
 

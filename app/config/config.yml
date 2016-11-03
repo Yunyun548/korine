@@ -124,10 +124,17 @@ easy_admin:
                     - id
                     - title
                     - description
+                    - theme
                     - { property: 'imageName', type: 'image', base_path: '/uploads/images' }
                 actions: [-show]
             form:
                 fields:
                     - title
                     - description
+                    - theme
                     - { property: 'imageFile', type: 'file' }
+            edit:
+                fields:
+                    - title
+                    - description
+                    - theme

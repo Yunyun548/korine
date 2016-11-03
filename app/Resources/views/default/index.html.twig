@@ -8,11 +8,23 @@
 
 {% block body %}
     <div class="korine-horizontal-gallery">
-        {% for image in images %}
-            <img class="img-responsive korine-gallery-image"
-                 data-src="{{ asset('uploads/images/' ~ image.imageName) }}"
-                 alt="{{ image.name }}"
-            />
+        {% for theme in themes %}
+            <div class="dropdown">
+                <img class="img-responsive korine-gallery-image"
+                data-src="{{ asset('uploads/theme/' ~ theme.imageName) }}"
+                alt="{{ theme.name }}"
+                />
+                <ul>
+                    {% for image in theme.images %}
+                        <li class="korine-dropdown-image">
+                            <img class="img-responsive "
+                            data-src="{{ asset('uploads/images/' ~ image.imageName) }}"
+                            alt="{{ image.title }}"
+                            />
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
     </div>
     <div class="korine-flex-center">

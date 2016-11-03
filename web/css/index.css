@@ -34,6 +34,34 @@ a {
     margin-left: 0px !important;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown ul {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 888;
+}
+
+.dropdown:hover ul {
+    display: block;
+}
+
+.korine-dropdown-image {
+    width: 100%;
+}
+
+.korine-dropdown-image img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
 /* TODO : media queries */
 
 /* FOOTER */

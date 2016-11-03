@@ -60,6 +60,11 @@ class Theme
      */
     protected $images;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -153,11 +158,11 @@ class Theme
     /**
      * Add image
      *
-     * @param \CoreBundle\Entity\Image $image
+     * @param \AppBundle\Entity\Image $image
      *
      * @return Company
      */
-    public function addImage(\CoreBundle\Entity\Image $image)
+    public function addImage(\AppBundle\Entity\Image $image)
     {
         $this->images[] = $image;
 
@@ -167,9 +172,9 @@ class Theme
     /**
      * Remove image
      *
-     * @param \CoreBundle\Entity\Image $image
+     * @param \AppBundle\Entity\Image $image
      */
-    public function removeImage(\CoreBundle\Entity\Image $image)
+    public function removeImage(\AppBundle\Entity\Image $image)
     {
         $this->images->removeElement($image);
     }
