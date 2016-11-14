@@ -84,7 +84,7 @@ a {
 /* MEDIA QUERIES*/
 /* GALLERY */
 @media screen and (min-height: 1079px) {
-    .korine-horizontal-gallery, .korine-gallery-image {
+    .korine-horizontal-gallery, .korine-gallery-image, .chocolat-image img {
         height: 270px !important;
         max-height: 270px !important;
     }
@@ -98,7 +98,7 @@ a {
 }
 
 @media screen and (min-height: 768px) and (max-height: 898px) {
-    .korine-horizontal-gallery, .korine-gallery-image {
+    .korine-horizontal-gallery, .korine-gallery-image{
         height: 220px !important;
         max-height: 220px !important;
     }
@@ -133,4 +133,10 @@ a {
     .korine-flex-center, .korine-footer {
         margin-top: 12%;
     }
+}
+
+/* VISIONNEUSE */
+.korine-full-screen-img {
+    margin-top: 10px;
+    width: 100%;
 }

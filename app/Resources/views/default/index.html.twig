@@ -1,34 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/featherlight.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}"/>
 {% endblock %}
 
 {% block body %}
     <div class="korine-horizontal-gallery">
         {% for theme in themes %}
-            <div class="dropdown">
-                <img class="img-responsive korine-gallery-image"
-                data-src="{{ asset('uploads/theme/' ~ theme.imageName) }}"
-                alt="{{ theme.name }}"
-                />
-                <ul>
-                    {% for image in theme.images %}
-                        <li class="korine-dropdown-image">
-                            <img class="img-responsive "
-                            data-src="{{ asset('uploads/images/' ~ image.imageName) }}"
-                            alt="{{ image.title }}"
-                            />
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <a id='theme-{{loop.index}}' href="#" data-featherlight="#lightbox-{{loop.index}}">
+                <img class="img-responsive korine-gallery-image" data-src="{{ asset('uploads/theme/' ~ theme.imageName) }}" alt="{{ theme.name }}"/>
+            </a>
         {% endfor %}
     </div>
     <div class="korine-flex-center">
-        <img class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine" />
+        <img class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine"/>
+        {% for theme in themes %}
+            <div id="lightbox-{{loop.index}}" class="hidden">
+                {% for image in theme.images %}
+                    {% if image.imageName is defined %}
+                        <img class="img-responsive korine-full-screen-img watermark" src="{{ asset('uploads/images/' ~ image.imageName) }}" alt="{{ image.title }}"/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
     <div class="korine-footer">
         <a href="#">
@@ -45,30 +42,55 @@
 {% endblock %}
 
 {% block js %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/portfolio.pack.min.js') }}"></script>
-    <!-- <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script> -->
+    <script src="//cdn.rawgit.com/noelboss/featherlight/1.5.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('js/watermark.jquery.min.js') }}"></script>
     <script type="text/javascript">
-        $( document ).ready(function() {
+        $(document).ready(function() {
 
-            var p = $(".korine-horizontal-gallery").portfolio({
-                showArrows: false,
-            });
+            var p = $(".korine-horizontal-gallery").portfolio({showArrows: false});
             p.init();
 
-            $('.korine-logo').slideToggle(800, 'linear', function() {
-                var marginTop = $(".korine-flex-center").css( "margin-top" );
-                $('.korine-logo').animate({ 'marginTop': marginTop }, 1000, function() {
+            $(document).watermark({
+                'path': "{{ asset('img/LOGO_KORINE.svg') }}",
+                'opacity': 80,
+            });
+
+            var logo = $('.korine-logo');
+            var baseUrl = "{{ url('homepage')|trim('/') }}";
+            var imgLogo1 = baseUrl + "{{ asset('img/LOGO_KORINE.svg') }}";
+
+            logo.svg('get');
+            logo.slideToggle(800, 'linear', function() {
+                var marginTop = $(".korine-flex-center").css("margin-top");
+                logo.animate({
+                    'marginTop': marginTop
+                }, 1000, function() {
                     $(".korine-horizontal-gallery").animate({
-                        left: 0,
+                        left: 0
                     }, 3000, function() {
                         // Animation complete.
                     });
                 });
             });
 
+            function blink(obj1) {
+                obj1.attr("src", imgLogo1);
+                obj1.css('background-color', '#000')
+            }
 
-            // TODO : Full page lightbox
+            function bgWhite(obj1) {
+                obj1.attr("src", imgLogo2);
+                obj1.css('background-color', '#fff')
+            }
+
+            {% for theme in themes %}
+                $('#theme-{{loop.index}}').on('click', function() {
+                    $('.featherlight-content .hidden').removeClass('hidden');
+                });
+            {% endfor %}
         });
     </script>
+
 {% endblock %}
