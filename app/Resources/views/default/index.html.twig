@@ -9,11 +9,18 @@
 
 {% block body %}
     <div class="korine-horizontal-gallery">
-        {% for theme in themes %}
-            <a id='theme-{{loop.index}}' href="#" data-featherlight="#lightbox-{{loop.index}}">
-                <img class="img-responsive korine-gallery-image" data-src="{{ asset('uploads/theme/' ~ theme.imageName) }}" alt="{{ theme.name }}"/>
-            </a>
-        {% endfor %}
+        <div class="col-xs-12 ph0">
+            {% for theme in themes|slice(1, 1) %}
+                <a id='theme-1' href="#" data-featherlight="#lightbox-1" class="col-xs-3 mt1">
+                    <img class="img-responsive korine-gallery-image" src="{{ asset('uploads/theme/' ~ theme.imageName) }}" alt="{{ theme.name }}"/>
+                </a>
+            {% endfor %}
+            {% for theme in themes|slice(2, 16) %}
+                <a id='theme-{{loop.index + 1}}' href="#" data-featherlight="#lightbox-{{loop.index + 1}}" class="col-xs-3 mt1">
+                    <img class="img-responsive korine-gallery-image" src="{{ asset('uploads/theme/' ~ theme.imageName) }}" alt="{{ theme.name }}"/>
+                </a>
+            {% endfor %}
+        </div>
     </div>
     <div class="korine-flex-center">
         <img class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine"/>
@@ -43,47 +50,70 @@
 
 {% block js %}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/portfolio.pack.min.js') }}"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.5.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/watermark.jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
 
-            var p = $(".korine-horizontal-gallery").portfolio({showArrows: false});
-            p.init();
-
-            $(document).watermark({
-                'path': "{{ asset('img/LOGO_KORINE.svg') }}",
-                'opacity': 80,
-            });
-
             var logo = $('.korine-logo');
-            var baseUrl = "{{ url('homepage')|trim('/') }}";
-            var imgLogo1 = baseUrl + "{{ asset('img/LOGO_KORINE.svg') }}";
+            // var baseUrl = "{{ url('homepage')|trim('/') }}";
+            var imgLogo1 = "{{ asset('img/LOGO_KORINE.svg') }}";
+            console.log(imgLogo1)
+            var imgLogo2 = "{{ asset('img/LOGO_KORINE_NOIR.svg') }}";
+            console.log(imgLogo2)
 
-            logo.svg('get');
-            logo.slideToggle(800, 'linear', function() {
-                var marginTop = $(".korine-flex-center").css("margin-top");
-                logo.animate({
-                    'marginTop': marginTop
-                }, 1000, function() {
-                    $(".korine-horizontal-gallery").animate({
-                        left: 0
-                    }, 3000, function() {
-                        // Animation complete.
-                    });
-                });
-            });
+            function blink(obj) {
+                bgWhite(obj)
+                sleep(150)
+                bgBlack(obj)
+                sleep(150)
+            }
 
-            function blink(obj1) {
+            function bgBlack(obj1) {
                 obj1.attr("src", imgLogo1);
-                obj1.css('background-color', '#000')
+                obj1.css("background-color", '#000')
             }
 
             function bgWhite(obj1) {
                 obj1.attr("src", imgLogo2);
-                obj1.css('background-color', '#fff')
+                obj1.css("background-color", '#fff')
             }
+
+            function sleep(milliseconds) {
+                var start = new Date().getTime();
+                for (var i = 0; i < 1e7; i++) {
+                    if ((new Date().getTime() - start) > milliseconds) {
+                        break;
+                    }
+                }
+            }
+
+
+            logo.slideToggle(800, 'linear', function() {
+                var marginTop = $(".korine-flex-center").css("margin-top");
+                logo.animate({
+                    'marginTop': marginTop
+                }, 1500, function() {
+
+                    var i = 0;
+                    var blinkInterval = setInterval(function() {
+                        blink(logo);
+                        i++;
+                        if (i > 10) {
+                            clearInterval(blinkInterval);
+                        }
+                    }, 300);
+
+                    setTimeout(function(){
+
+                        $(".korine-horizontal-gallery").animate({
+                            left: 0
+                        }, 3000, function() {
+                            $(document).watermark({'path': "{{ asset('img/LOGO_KORINE.svg') }}", 'opacity': 80});
+                        });
+                    }, 3000);
+                });
+            });
 
             {% for theme in themes %}
                 $('#theme-{{loop.index}}').on('click', function() {

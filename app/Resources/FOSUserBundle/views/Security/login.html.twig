@@ -1,0 +1,35 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,500' rel='stylesheet' type='text/css'>
+
+{% block fos_user_content %}
+
+<body>
+    <div class="login" id="login-block">
+        <!-- <div class="login-triangle"></div> -->
+        <div class="height300 left-box col-xs-6">
+            <h1 class="login-header">{{ "Korine" | trans }} <strong>{{ "WEBSITE" | trans }}</strong></h1>
+            <h2 class="login-header">{{ "Identifiez vous" | trans }}</h2>
+        </div>
+        <div class="height300 col-xs-6" style="background:#CCC;">
+            <form action="{{ path("fos_user_security_check") }}" class="login-container" method="post">
+                {% if error %}
+                    <p class="alert alert-danger">
+                        {% if error.code == 0 %}
+                            {{ "Identifiants invalides" | trans }}
+                        {% else %}
+                            {{ "Une erreur est survenue, merci de réessayer." | trans }}
+                        {% endif %}
+                    </p>
+                {% endif %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                <input type="text" placeholder=" {{ 'Login' | trans }}" id="username" name="_username" value="{{ last_username }}" required="required" />
+                <input type="password" placeholder=" {{ 'Mot de passe' | trans }}" id="_submit" type="password" id="password" name="_password" required="required" />
+                <input type="submit" id="_submit" name="_submit" value="Se Connecter" />
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock fos_user_content %}

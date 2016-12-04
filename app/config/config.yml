@@ -71,9 +71,15 @@ vich_uploader:
         image_file:
             uri_prefix:         /images
             upload_destination: '%kernel.root_dir%/../web/uploads/images'
+            namer:              vich_uploader.namer_uniqid
+            delete_on_remove:   true
+            delete_on_update:   true
         theme_file:
-            uri_prefix:         /images
+            uri_prefix:         /theme
             upload_destination: '%kernel.root_dir%/../web/uploads/theme'
+            namer:              vich_uploader.namer_uniqid
+            delete_on_remove:   true
+            delete_on_update:   true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -92,6 +98,8 @@ easy_admin:
     design:
         menu: ['User', 'Image', 'Theme']
         form_theme: ['horizontal', 'VichUploaderBundle:Form:fields.html.twig']
+        brand_color: '#000000'
+    site_name: KORINE WEBSITE
     # ...
     entities:
         User:
@@ -110,7 +118,7 @@ easy_admin:
                 fields:
                     - id
                     - name
-                    - { property: 'imageName', type: 'image', base_path: '/uploads/images' }
+                    - { property: 'imageName', type: 'image', base_path: '/uploads/theme' }
                 actions: [-show]
             form:
                 fields:

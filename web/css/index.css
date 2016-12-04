@@ -8,12 +8,22 @@ a {
     text-decoration: none;
 }
 
+.ph0 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.mt1 {
+    margin-top: 1%
+}
+
 /* LOGO */
 .korine-logo {
     height: 25%;
     max-width: 50%;
     min-width: 50%;
     display: none;
+    z-index: 80085;
 }
 
 .korine-flex-center {
@@ -25,47 +35,21 @@ a {
 
 /* GALLERY */
 .korine-horizontal-gallery {
-    display: flex;
-    align-self: flex-start; /* align top left */
+    /*align-self: flex-start; /* align top left */*/
+    /*display: flex;*/
+    display: block;
     top: 0;
     position: absolute;
     left: 3000px;
     overflow-x: hidden !important;
+    /*max-width: 100%;*/
+    /*width: 100%;*/
 }
 
 .korine-gallery-image {
-    margin-left: 0px !important;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown ul {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    width: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    z-index: 888;
-}
-
-.dropdown:hover ul {
-    display: block;
-}
-
-.korine-dropdown-image {
-    width: 100%;
-}
-
-.korine-dropdown-image img {
-    max-width: 100% !important;
     height: auto !important;
+    max-width: 100% !important;
 }
-
-/* TODO : media queries */
 
 /* FOOTER */
 .korine-footer {
@@ -83,7 +67,7 @@ a {
 
 /* MEDIA QUERIES*/
 /* GALLERY */
-@media screen and (min-height: 1079px) {
+/*@media screen and (min-height: 1079px) {
     .korine-horizontal-gallery, .korine-gallery-image, .chocolat-image img {
         height: 270px !important;
         max-height: 270px !important;
@@ -102,7 +86,7 @@ a {
         height: 220px !important;
         max-height: 220px !important;
     }
-}
+}*/
 
 /* LOGO and FOOTER */
 @media screen and (min-width: 1px) and (max-width: 619px) {
@@ -139,4 +123,11 @@ a {
 .korine-full-screen-img {
     margin-top: 10px;
     width: 100%;
+}
+
+.featherlight-content  {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    background: rgba(77, 77, 77, 0.77) !important;
+    max-height: 100% !important;
 }
