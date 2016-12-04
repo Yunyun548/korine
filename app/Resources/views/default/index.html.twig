@@ -23,7 +23,8 @@
         </div>
     </div>
     <div class="korine-flex-center">
-        <img class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine"/>
+        <img id="logo1" class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine"/>
+        <img id="logo2" class="korine-logo hidden" src="{{ asset('img/LOGO_KORINE_NOIR.svg') }}" alt="logo korine"/>
         {% for theme in themes %}
             <div id="lightbox-{{loop.index}}" class="hidden">
                 {% for image in theme.images %}
@@ -56,27 +57,30 @@
         $(document).ready(function() {
 
             var logo = $('.korine-logo');
-            // var baseUrl = "{{ url('homepage')|trim('/') }}";
             var imgLogo1 = "{{ asset('img/LOGO_KORINE.svg') }}";
-            console.log(imgLogo1)
             var imgLogo2 = "{{ asset('img/LOGO_KORINE_NOIR.svg') }}";
-            console.log(imgLogo2)
 
             function blink(obj) {
+
                 bgWhite(obj)
-                sleep(150)
+                sleep(50)
                 bgBlack(obj)
-                sleep(150)
+                sleep(50)
             }
 
             function bgBlack(obj1) {
-                obj1.attr("src", imgLogo1);
                 obj1.css("background-color", '#000')
+                logo.fadeOut(50, function() {
+                    logo.attr("src", imgLogo1);
+                }).fadeIn(50);
             }
 
             function bgWhite(obj1) {
-                obj1.attr("src", imgLogo2);
+
                 obj1.css("background-color", '#fff')
+                logo.fadeOut(50, function() {
+                    logo.attr("src", imgLogo2);
+                }).fadeIn(50);
             }
 
             function sleep(milliseconds) {
@@ -88,30 +92,35 @@
                 }
             }
 
+            function makeBlink() {
+                var i = 0;
+                var blinkInterval = setInterval(function() {
+                    blink(logo);
+                    i++;
+                    if (i > 10) {
+                        clearInterval(blinkInterval);
+                    }
+                }, 300);
+            }
 
+            function slideGallery() {
+                setTimeout(function(){
+
+                    $(".korine-horizontal-gallery").animate({
+                        left: 0
+                    }, 3000, function() {
+                        $(document).watermark({'path': "{{ asset('img/LOGO_KORINE.svg') }}", 'opacity': 80});
+                    });
+                }, 3000);
+            }
+
+            makeBlink()
             logo.slideToggle(800, 'linear', function() {
                 var marginTop = $(".korine-flex-center").css("margin-top");
                 logo.animate({
                     'marginTop': marginTop
                 }, 1500, function() {
-
-                    var i = 0;
-                    var blinkInterval = setInterval(function() {
-                        blink(logo);
-                        i++;
-                        if (i > 10) {
-                            clearInterval(blinkInterval);
-                        }
-                    }, 300);
-
-                    setTimeout(function(){
-
-                        $(".korine-horizontal-gallery").animate({
-                            left: 0
-                        }, 3000, function() {
-                            $(document).watermark({'path': "{{ asset('img/LOGO_KORINE.svg') }}", 'opacity': 80});
-                        });
-                    }, 3000);
+                    slideGallery()
                 });
             });
 
