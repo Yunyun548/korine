@@ -10,13 +10,8 @@
 {% block body %}
     <div class="korine-horizontal-gallery">
         <div class="col-xs-12 ph0">
-            {% for theme in themes|slice(1, 1) %}
-                <a id='theme-1' href="#" data-featherlight="#lightbox-1" class="col-xs-3 mt1">
-                    <img class="img-responsive korine-gallery-image" src="{{ asset('uploads/theme/' ~ theme.imageName) }}" alt="{{ theme.name }}"/>
-                </a>
-            {% endfor %}
-            {% for theme in themes|slice(2, 16) %}
-                <a id='theme-{{loop.index + 1}}' href="#" data-featherlight="#lightbox-{{loop.index + 1}}" class="col-xs-3 mt1">
+            {% for theme in themes|slice(0, 16) %}
+                <a id='theme-{{loop.index}}' {% if theme.images|length > 0 %}href="#" data-featherlight="#lightbox-{{loop.index}}"{% endif %} class="col-xs-3 mt1">
                     <img class="img-responsive korine-gallery-image" src="{{ asset('uploads/theme/' ~ theme.imageName) }}" alt="{{ theme.name }}"/>
                 </a>
             {% endfor %}
@@ -25,7 +20,8 @@
     <div class="korine-flex-center">
         <img id="logo1" class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine"/>
         <img id="logo2" class="korine-logo hidden" src="{{ asset('img/LOGO_KORINE_NOIR.svg') }}" alt="logo korine"/>
-        {% for theme in themes %}
+        {% for theme in themes|slice(0, 16) %}
+            {% if theme.images|length > 0 %}
             <div id="lightbox-{{loop.index}}" class="hidden">
                 {% for image in theme.images %}
                     {% if image.imageName is defined %}
@@ -33,6 +29,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
+            {% endif %}
         {% endfor %}
     </div>
     <div class="korine-footer">
@@ -60,61 +57,58 @@
             var imgLogo1 = "{{ asset('img/LOGO_KORINE.svg') }}";
             var imgLogo2 = "{{ asset('img/LOGO_KORINE_NOIR.svg') }}";
 
-            function blink(obj) {
-
-                bgWhite(obj)
-                sleep(50)
-                bgBlack(obj)
-                sleep(50)
-            }
-
-            function bgBlack(obj1) {
-                obj1.css("background-color", '#000')
-                logo.fadeOut(50, function() {
-                    logo.attr("src", imgLogo1);
-                }).fadeIn(50);
-            }
-
-            function bgWhite(obj1) {
-
-                obj1.css("background-color", '#fff')
-                logo.fadeOut(50, function() {
-                    logo.attr("src", imgLogo2);
-                }).fadeIn(50);
-            }
-
-            function sleep(milliseconds) {
-                var start = new Date().getTime();
-                for (var i = 0; i < 1e7; i++) {
-                    if ((new Date().getTime() - start) > milliseconds) {
-                        break;
-                    }
-                }
-            }
-
-            function makeBlink() {
-                var i = 0;
-                var blinkInterval = setInterval(function() {
-                    blink(logo);
-                    i++;
-                    if (i > 10) {
-                        clearInterval(blinkInterval);
-                    }
-                }, 300);
-            }
+            // function blink(obj) {
+            //
+            //     bgWhite(obj)
+            //     sleep(100)
+            //     bgBlack(obj)
+            //     sleep(100)
+            // }
+            //
+            // function bgBlack(obj1) {
+            //     obj1.css("background-color", '#000')
+            //     logo.fadeOut(100, function() {
+            //         logo.attr("src", imgLogo1);
+            //     }).fadeIn(100);
+            // }
+            //
+            // function bgWhite(obj1) {
+            //
+            //     obj1.css("background-color", '#fff')
+            //     logo.fadeOut(100, function() {
+            //         logo.attr("src", imgLogo2);
+            //     }).fadeIn(100);
+            // }
+            //
+            // function sleep(milliseconds) {
+            //     var start = new Date().getTime();
+            //     for (var i = 0; i < 1e7; i++) {
+            //         if ((new Date().getTime() - start) > milliseconds) {
+            //             break;
+            //         }
+            //     }
+            // }
+            //
+            // function makeBlink() {
+            //     var i = 0;
+            //     var blinkInterval = setInterval(function() {
+            //         blink(logo);
+            //         i++;
+            //         if (i > 5) {
+            //             clearInterval(blinkInterval);
+            //         }
+            //     }, 600);
+            // }
 
             function slideGallery() {
-                setTimeout(function(){
-
-                    $(".korine-horizontal-gallery").animate({
-                        left: 0
-                    }, 3000, function() {
-                        $(document).watermark({'path': "{{ asset('img/LOGO_KORINE.svg') }}", 'opacity': 80});
-                    });
-                }, 3000);
+                $(".korine-horizontal-gallery").animate({
+                    left: 0
+                }, 3000, function() {
+                    // $(document).watermark({'path': "{{ asset('img/LOGO_KORINE.svg') }}", 'opacity': 80});
+                });
             }
 
-            makeBlink()
+            // makeBlink()
             logo.slideToggle(800, 'linear', function() {
                 var marginTop = $(".korine-flex-center").css("margin-top");
                 logo.animate({
@@ -124,10 +118,12 @@
                 });
             });
 
-            {% for theme in themes %}
-                $('#theme-{{loop.index}}').on('click', function() {
-                    $('.featherlight-content .hidden').removeClass('hidden');
-                });
+            {% for theme in themes|slice(0, 16) %}
+                {% if theme.images|length > 0 %}
+                    $('#theme-{{loop.index}}').on('click', function() {
+                        $('.featherlight-content .hidden').removeClass('hidden');
+                    });
+                {% endif %}
             {% endfor %}
         });
     </script>
