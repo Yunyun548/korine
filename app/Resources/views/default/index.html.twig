@@ -18,8 +18,7 @@
         </div>
     </div>
     <div class="korine-flex-center">
-        <img id="logo1" class="korine-logo" src="{{ asset('img/LOGO_KORINE.svg') }}" alt="logo korine"/>
-        <img id="logo2" class="korine-logo hidden" src="{{ asset('img/LOGO_KORINE_NOIR.svg') }}" alt="logo korine"/>
+        <img class="korine-logo" src="{{ asset('img/KORINE_BLANC.svg') }}" alt="logo korine"/>
         {% for theme in themes|slice(0, 16) %}
             {% if theme.images|length > 0 %}
             <div id="lightbox-{{loop.index}}" class="hidden">
@@ -33,72 +32,32 @@
         {% endfor %}
     </div>
     <div class="korine-footer">
-        <a href="#">
+        <a href="https://www.facebook.com/korineofficial/">
             <i class="fa fa-facebook" aria-hidden="true"></i>
         </a>
-        <a href="#">
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-        </a>
-        <a href="#">
+        <a href="https://www.instagram.com/korine_official/">
             <i class="fa fa-instagram" aria-hidden="true"></i>
         </a>
-        <a href="#">contact@korine.fr</a>
+        <a href="https://www.youtube.com/channel/UC47yG7-jB_CJCQ-AtaEGGjA">
+            <i class="fa fa-youtube" aria-hidden="true"></i>
+        </a>
+        <a href="mailto:contact@korinewebsite.com">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
     </div>
+    <div class="hidden flex-center-margin-top"></div>
 {% endblock %}
 
 {% block js %}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.5.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ asset('js/watermark.jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/watermark.jquery.min.js') }}"></script> -->
     <script type="text/javascript">
         $(document).ready(function() {
 
             var logo = $('.korine-logo');
             var imgLogo1 = "{{ asset('img/LOGO_KORINE.svg') }}";
             var imgLogo2 = "{{ asset('img/LOGO_KORINE_NOIR.svg') }}";
-
-            // function blink(obj) {
-            //
-            //     bgWhite(obj)
-            //     sleep(100)
-            //     bgBlack(obj)
-            //     sleep(100)
-            // }
-            //
-            // function bgBlack(obj1) {
-            //     obj1.css("background-color", '#000')
-            //     logo.fadeOut(100, function() {
-            //         logo.attr("src", imgLogo1);
-            //     }).fadeIn(100);
-            // }
-            //
-            // function bgWhite(obj1) {
-            //
-            //     obj1.css("background-color", '#fff')
-            //     logo.fadeOut(100, function() {
-            //         logo.attr("src", imgLogo2);
-            //     }).fadeIn(100);
-            // }
-            //
-            // function sleep(milliseconds) {
-            //     var start = new Date().getTime();
-            //     for (var i = 0; i < 1e7; i++) {
-            //         if ((new Date().getTime() - start) > milliseconds) {
-            //             break;
-            //         }
-            //     }
-            // }
-            //
-            // function makeBlink() {
-            //     var i = 0;
-            //     var blinkInterval = setInterval(function() {
-            //         blink(logo);
-            //         i++;
-            //         if (i > 5) {
-            //             clearInterval(blinkInterval);
-            //         }
-            //     }, 600);
-            // }
 
             function slideGallery() {
                 $(".korine-horizontal-gallery").animate({
@@ -110,7 +69,7 @@
 
             // makeBlink()
             logo.slideToggle(800, 'linear', function() {
-                var marginTop = $(".korine-flex-center").css("margin-top");
+                var marginTop = $(".flex-center-margin-top").css("margin-top");
                 logo.animate({
                     'marginTop': marginTop
                 }, 1500, function() {
