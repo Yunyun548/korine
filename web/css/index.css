@@ -62,6 +62,7 @@ a {
     align-self: flex-end; /* align bottom */
     height: 10%;
     margin-top: 20%;
+    z-index: 80084;
 }
 
 .korine-footer a {
